@@ -10,10 +10,8 @@ class ItemController {
                 id: item.id,
                 name: item.title,
                 // image: `http://localhost:3333/uploads/${item.image}`,
-                // image: `http://192.168.15.16:3333/uploads/${item.image}`,
-                // darkImage: `http://192.168.15.16:3333/uploads/${item.darkImage}`,
-                image: `https://ecoleta-backend-mrc.herokuapp.com/uploads/${item.image}`,
-                darkImage: `https://ecoleta-backend-mrc.herokuapp.com/uploads/${item.darkImage}`,
+                image: `http://192.168.15.16:3333/uploads/${item.image}`,
+                darkImage: `http://192.168.15.16:3333/uploads/${item.darkImage}`,
             }
         });
 

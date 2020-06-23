@@ -15,5 +15,5 @@ app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.use(errors());
 
 app.listen("3333", () => {
-    console.log('Serve ON\nhttp://localhost:3333/');
+    console.log('Serve ON\nhppt://localhost:3333/');
 })
