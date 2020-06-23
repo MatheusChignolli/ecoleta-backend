@@ -8,7 +8,11 @@
     "dev": "npx ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "knex:migrate": "npx knex --knexfile knexfile.ts migrate:latest",
     "knex:seed": "npx knex --knexfile knexfile.ts seed:run",
-    "start": "npm dev"
+    "start": "node src/server.js",
+    "postinstall": "tsc"
+  },
+  "engines": {
+    "node": "10.5.0"
   },
   "keywords": [],
   "author": "",
