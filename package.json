@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/main/server.js",
+    "start": "node ./dist/src/server.js",
     "build": "tsc",
     "dev": "npx ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "knex:migrate": "npx knex --knexfile knexfile.ts migrate:latest",
