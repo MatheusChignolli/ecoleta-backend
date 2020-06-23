@@ -1,37 +1,50 @@
 import { Request, Response } from 'express';
 import knex from '../database/connection'
 
+interface FilterQuery {
+    city: string, 
+    uf: string,
+    items: string,
+}
+
 class PointsController {
     async index (req: Request, res: Response) {
-        const { city, uf, items } = req.query;
-
-        const parsedItems = String(items)
-            .split(',')
-            .map(item => Number(item.trim()));
-
         var points;
 
-        if(city !== '0' && uf !== '0') {
+        const { city, uf, items } = req.query;
+
+        if(typeof city === 'undefined') {
             points = await knex('points')
             .join('point_items', 'points.id', '=', 'point_items.point_id')
-            .whereIn('point_items.item_id', parsedItems)
-            .andWhere('city', String(city))
-            .andWhere('uf', String(uf))
-            .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
-            .distinct();
-        } else if(uf !== '0') {
-            points = await knex('points')
-            .join('point_items', 'points.id', '=', 'point_items.point_id')
-            .whereIn('point_items.item_id', parsedItems)
-            .andWhere('uf', String(uf))
             .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
             .distinct();
         } else {
-            points = await knex('points')
-            .join('point_items', 'points.id', '=', 'point_items.point_id')
-            .whereIn('point_items.item_id', parsedItems)
-            .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
-            .distinct();
+            const parsedItems = String(items)
+                .split(',')
+                .map(item => Number(item.trim()));
+
+            if(city !== '0' && uf !== '0') {
+                points = await knex('points')
+                .join('point_items', 'points.id', '=', 'point_items.point_id')
+                .whereIn('point_items.item_id', parsedItems)
+                .andWhere('city', String(city))
+                .andWhere('uf', String(uf))
+                .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
+                .distinct();
+            } else if(uf !== '0') {
+                points = await knex('points')
+                .join('point_items', 'points.id', '=', 'point_items.point_id')
+                .whereIn('point_items.item_id', parsedItems)
+                .andWhere('uf', String(uf))
+                .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
+                .distinct();
+            } else {
+                points = await knex('points')
+                .join('point_items', 'points.id', '=', 'point_items.point_id')
+                .whereIn('point_items.item_id', parsedItems)
+                .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
+                .distinct();
+            }
         }
 
         const serializedPoints = points.map(point => {

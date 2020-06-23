@@ -14,6 +14,8 @@ app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
 app.use(errors());
 
-app.listen(process.env.PORT || "3333", () => {
-    console.log('Serve ON\nhttp://localhost:3333/');
+var port = process.env.PORT ? process.env.PORT : "3333";
+
+app.listen(port, () => {
+    console.log(`Serve ON\nhttp://localhost:${port}/`);
 })

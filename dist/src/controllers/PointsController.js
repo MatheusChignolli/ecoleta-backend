@@ -56,15 +56,24 @@ var PointsController = /** @class */ (function () {
     }
     PointsController.prototype.index = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, city, uf, items, parsedItems, points, serializedPoints;
+            var points, _a, city, uf, items, parsedItems, serializedPoints;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = req.query, city = _a.city, uf = _a.uf, items = _a.items;
+                        if (!(typeof city === 'undefined')) return [3 /*break*/, 2];
+                        return [4 /*yield*/, connection_1.default('points')
+                                .join('point_items', 'points.id', '=', 'point_items.point_id')
+                                .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
+                                .distinct()];
+                    case 1:
+                        points = _b.sent();
+                        return [3 /*break*/, 8];
+                    case 2:
                         parsedItems = String(items)
                             .split(',')
                             .map(function (item) { return Number(item.trim()); });
-                        if (!(city !== '0' && uf !== '0')) return [3 /*break*/, 2];
+                        if (!(city !== '0' && uf !== '0')) return [3 /*break*/, 4];
                         return [4 /*yield*/, connection_1.default('points')
                                 .join('point_items', 'points.id', '=', 'point_items.point_id')
                                 .whereIn('point_items.item_id', parsedItems)
@@ -72,29 +81,29 @@ var PointsController = /** @class */ (function () {
                                 .andWhere('uf', String(uf))
                                 .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
                                 .distinct()];
-                    case 1:
+                    case 3:
                         points = _b.sent();
-                        return [3 /*break*/, 6];
-                    case 2:
-                        if (!(uf !== '0')) return [3 /*break*/, 4];
+                        return [3 /*break*/, 8];
+                    case 4:
+                        if (!(uf !== '0')) return [3 /*break*/, 6];
                         return [4 /*yield*/, connection_1.default('points')
                                 .join('point_items', 'points.id', '=', 'point_items.point_id')
                                 .whereIn('point_items.item_id', parsedItems)
                                 .andWhere('uf', String(uf))
                                 .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
                                 .distinct()];
-                    case 3:
+                    case 5:
                         points = _b.sent();
-                        return [3 /*break*/, 6];
-                    case 4: return [4 /*yield*/, connection_1.default('points')
+                        return [3 /*break*/, 8];
+                    case 6: return [4 /*yield*/, connection_1.default('points')
                             .join('point_items', 'points.id', '=', 'point_items.point_id')
                             .whereIn('point_items.item_id', parsedItems)
                             .select('points.id', 'points.image', 'points.name', 'points.email', 'points.whatsapp', 'points.city', 'points.uf', 'points.latitude', 'points.longitude', 'point_items.point_id')
                             .distinct()];
-                    case 5:
+                    case 7:
                         points = _b.sent();
-                        _b.label = 6;
-                    case 6:
+                        _b.label = 8;
+                    case 8:
                         serializedPoints = points.map(function (point) {
                             return __assign(__assign({}, point), { image: "http://192.168.15.16:3333/uploads/" + point.image });
                         });
