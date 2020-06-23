@@ -1,1 +1,1 @@
-web: ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts
+web: npx ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts
