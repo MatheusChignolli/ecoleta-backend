@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/main/server.js",
     "build": "tsc",
     "dev": "npx ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "knex:migrate": "npx knex --knexfile knexfile.ts migrate:latest",
-    "knex:seed": "npx knex --knexfile knexfile.ts seed:run",
-    "start": "npm dev"
+    "knex:seed": "npx knex --knexfile knexfile.ts seed:run"
   },
   "keywords": [],
   "author": "",
