@@ -11,6 +11,11 @@ const pointsController = new PointsController();
 const routes = express.Router();
 const upload = multer(multerConfig);
 
+routes.route('/')
+    .get((req, res) => {
+        res.send('Server Online');
+    })
+
 routes.route('/items')
     .get(itemsController.index);
 
